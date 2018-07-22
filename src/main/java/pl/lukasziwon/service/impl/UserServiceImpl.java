@@ -9,6 +9,8 @@ import pl.lukasziwon.io.entity.UserEntity;
 import pl.lukasziwon.service.UserService;
 import pl.lukasziwon.shared.dto.UserDto;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -38,6 +40,15 @@ public class UserServiceImpl implements UserService {
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(storedUserDetails,returnValue);
 		
+		return returnValue;
+	}
+
+	@Override
+	public UserDto getUserByUserID(String userID) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userID);
+		if(userEntity==null) throw new RuntimeException("No such user");
+		BeanUtils.copyProperties(userEntity,returnValue);
 		return returnValue;
 	}
 

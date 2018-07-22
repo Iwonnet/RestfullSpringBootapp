@@ -6,4 +6,6 @@ public interface UserService {
 	
 	UserDto createUser(UserDto user);
 
+	UserDto getUserByUserID(String userID);
+
 }
